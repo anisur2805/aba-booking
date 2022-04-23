@@ -187,7 +187,7 @@ function aba_booking_input_field($type = "text", $id = '', $name = '', $placehol
 
 
 // Change Add title to 
-function aba_booking_courses_title_text($title) {
+function aba_booking_courses_title($title) {
       $screen = get_current_screen();
 
       if ('aba_booking_courses' == $screen->post_type) {
@@ -197,11 +197,11 @@ function aba_booking_courses_title_text($title) {
       return $title;
 }
 
-add_filter('enter_title_here', 'aba_booking_courses_title_text');
+add_filter('enter_title_here', 'aba_booking_courses_title');
 
 
 // Change Add title to 
-function aba_booking_departments_title_text($title) {
+function aba_booking_departments_title($title) {
       $screen = get_current_screen();
 
       if ('aba_booking_dept' == $screen->post_type) {
@@ -211,25 +211,38 @@ function aba_booking_departments_title_text($title) {
       return $title;
 }
 
-add_filter('enter_title_here', 'aba_booking_departments_title_text');
+add_filter('enter_title_here', 'aba_booking_departments_title');
+
+// Change Add title to 
+function aba_booking_semester_title($title) {
+      $screen = get_current_screen();
+
+      if ('aba_booking_semester' == $screen->post_type) {
+            $title = __('Add Semester Name', 'aba-booking');
+      }
+
+      return $title;
+}
+
+add_filter('enter_title_here', 'aba_booking_semester_title');
 /**
  * Insert users to db
  *
  * @param array $args
  * @return int|WP_Error
  */
-function aba_booking_insert_users( $args = [] ) {
+function aba_booking_insert_users($args = []) {
       global $wpdb;
 
-      if ( empty( $args['name'] ) ) {
-            return new \WP_Error('no-name', __('You must provide a name', 'ABA_BOOKING-popup-creator') );
+      if (empty($args['name'])) {
+            return new \WP_Error('no-name', __('You must provide a name', 'ABA_BOOKING-popup-creator'));
       }
 
-      if ( empty( $args['email'] ) ) {
-            return new \WP_Error('no-email', __('You must provide a email address', 'ABA_BOOKING-popup-creator') );
+      if (empty($args['email'])) {
+            return new \WP_Error('no-email', __('You must provide a email address', 'ABA_BOOKING-popup-creator'));
       }
-      if ( empty( $args['phone'] ) ) {
-            return new \WP_Error('no-phone', __('You must provide a phone number', 'ABA_BOOKING-popup-creator') );
+      if (empty($args['phone'])) {
+            return new \WP_Error('no-phone', __('You must provide a phone number', 'ABA_BOOKING-popup-creator'));
       }
 
       $defaults = [
@@ -241,7 +254,7 @@ function aba_booking_insert_users( $args = [] ) {
             'created_at'      => current_time('mysql'),
       ];
 
-      $data = wp_parse_args( $args, $defaults );
+      $data = wp_parse_args($args, $defaults);
 
 
       $inserted = $wpdb->insert(
@@ -257,9 +270,59 @@ function aba_booking_insert_users( $args = [] ) {
             ]
       );
 
-      if ( ! $inserted ) {
+      if (!$inserted) {
             return new \WP_Error('failed-to-insert', __('Failed to insert', 'ABA_BOOKING-popup-creator'));
       }
 
       return $wpdb->insert_id;
 }
+
+
+/* Create Staff Member User Role */
+add_role(
+      'aba_teacher', //  System name of the role.
+      __('Teacher'), // Display name of the role.
+      array(
+            'read'  => true,
+            'delete_posts'  => true,
+            'delete_published_posts' => true,
+            'edit_posts'   => true,
+            'publish_posts' => true,
+            'upload_files'  => true,
+            'edit_pages'  => true,
+            'edit_published_pages'  =>  true,
+            'publish_pages'  => true,
+            'delete_published_pages' => false, // This user will NOT be able to  delete published pages.
+      )
+);
+
+/* Create Staff Member User Role */
+add_role(
+      'aba_student', //  System name of the role.
+      __('Student'), // Display name of the role.
+      array(
+            'read'  => true,
+            'delete_posts'  => true,
+            'delete_published_posts' => true,
+            'edit_posts'   => true,
+            'publish_posts' => true,
+            'upload_files'  => true,
+            'edit_pages'  => true,
+            'edit_published_pages'  =>  true,
+            'publish_pages'  => true,
+            'delete_published_pages' => false, // This user will NOT be able to  delete published pages.
+      )
+);
+
+
+/* Upgrade the Author Role */
+function author_level_up() {
+      // Retrieve the  Author role.
+      $role = get_role(  'aba_teacher' );
+      
+      // Let's add a set  of new capabilities we want Authors to have.
+      $role->add_cap(  'edit_pages' );
+      $role->add_cap(  'edit_published_pages' );
+      $role->add_cap(  'publish_pages' );
+  }
+  add_action( 'admin_init', 'author_level_up');

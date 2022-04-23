@@ -13,10 +13,8 @@ class Courses
             $labels = array(
                   'name'               => __( 'Courses', 'aba-booking' ),
                   'singular_name'      => __( 'Course', 'aba-booking' ),
-                  'featured_image'     => __( 'Course Image', 'aba-booking' ),
-                  'set_featured_image' => __( 'Set Course Image as Background', 'aba-booking' ),
                   'search_items'       => __('Search Course', 'aba-booking' ),
-                  'all_items'          => __('All Courses', 'aba-booking'),
+                  'all_items'          => __('Courses', 'aba-booking'),
                   'add_new_item'       => __('Add New Course', 'aba-booking'),
                   'add_new'            => __('Add New Course', 'aba-booking'),
                   'new_item'           => __('New Course', 'aba-booking'),
@@ -43,7 +41,8 @@ class Courses
                   'exclude_from_search' => false,
                   'capability_type'     => 'post',
                   'rewrite'             => array( 'slug' => 'aba-booking-courses', 'with_front' => true ),
-                  'menu_icon'           => 'dashicons-screenoptions',
+                  // 'menu_icon'           => 'dashicons-admin-page',
+                  'show_in_menu'          => 'aba-booking',
             );
             register_post_type( 'aba_booking_courses', $args );
       }

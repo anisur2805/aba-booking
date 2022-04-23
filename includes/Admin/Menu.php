@@ -12,17 +12,29 @@ class Menu {
 
       public function admin_menu() {
             $capability = 'manage_options';
-            $parent_slug = 'edit.php?post_type=ABA_BOOKING_popup';
-            $page_title = __('Settings', 'ABA_BOOKING-popup-creator');
+            $menu_slug = 'aba-booking';
+            $parent_slug = 'aba-booking';
+            $page_title = __('Settings', 'Aba Booking');
 
-            add_submenu_page($parent_slug, __('Settings', 'ABA_BOOKING-popup-creator'), __('Settings', 'ABA_BOOKING-popup-creator'), $capability, 'ABA_BOOKING-popup-settings', [ $this, 'settings_page']);
-            add_submenu_page($parent_slug, __('Subscribers', 'ABA_BOOKING-popup-creator'), __('Subscribers', 'ABA_BOOKING-popup-creator'), $capability, 'ABA_BOOKING-popup-subscribers', [ $this, 'subscribers_page']);
-
-            add_submenu_page($parent_slug, __('Addresses', 'ABA_BOOKING-popup-creator'), __('Addresses', 'ABA_BOOKING-popup-creator'), $capability, 'ABA_BOOKING-popup-form', [$this, 'address_page']);
+            add_menu_page( __('Booking Appt', 'aba-booking'), __('Booking Appt', 'aba-booking'), $capability, $menu_slug, [ $this, 'render_aba_booking_page'], 'dashicons-calendar', 25);
+            add_submenu_page( $menu_slug, __('Teachers', 'aba-booking'), __('Teachers', 'aba-booking'), $capability, 'aba-booking-teacher', [ $this, 'render_teacher_page'] );
+            add_submenu_page( $menu_slug, __('Students', 'aba-booking'), __('Students', 'aba-booking'), $capability, 'aba-booking-student', [ $this, 'render_student_page'] );
             
-            wp_enqueue_style('ABA_BOOKING-tabbed');
-            wp_enqueue_script('ABA_BOOKING-tabbed');
+            // wp_enqueue_style('ABA_BOOKING-tabbed');
+            // wp_enqueue_script('ABA_BOOKING-tabbed');
             
       }
+
+      public function render_aba_booking_page() {
+            echo "Hello from Main booking page";
+      }
+
+      public function render_teacher_page() {
+            echo "Hello from Teacher page";
+      }
+      public function render_student_page() {
+            include __DIR__ . '/Students.php';
+      }
+      
 
 }

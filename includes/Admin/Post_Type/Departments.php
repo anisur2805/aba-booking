@@ -13,10 +13,8 @@ class Departments
             $labels = array(
                   'name'               => __( 'Departments', 'aba-booking' ),
                   'singular_name'      => __( 'Departments', 'aba-booking' ),
-                  'featured_image'     => __( 'Departments Image', 'aba-booking' ),
-                  'set_featured_image' => __( 'Set Departments Image as Background', 'aba-booking' ),
                   'search_items'       => __('Search Departments', 'aba-booking' ),
-                  'all_items'          => __('All Departments', 'aba-booking'),
+                  'all_items'          => __('Departments', 'aba-booking'),
                   'add_new_item'       => __('Add New Department', 'aba-booking'),
                   'add_new'            => __('Add New Department', 'aba-booking'),
                   'new_item'           => __('New Departments', 'aba-booking'),
@@ -43,7 +41,8 @@ class Departments
                   'exclude_from_search' => false,
                   'capability_type'     => 'post',
                   'rewrite'             => array( 'slug' => 'aba-booking-departments', 'with_front' => true ),
-                  'menu_icon'           => 'dashicons-screenoptions',
+                  // 'menu_icon'           => 'dashicons-screenoptions',
+                  'show_in_menu'          => 'aba-booking',
             );
             register_post_type( 'aba_booking_dept', $args );
       }
