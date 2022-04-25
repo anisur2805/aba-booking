@@ -31,7 +31,7 @@ class Menu {
             echo "Hello from Teacher page";
       }
       public function render_student_page() {
-            include __DIR__ . '/Students.php';
+            // include __DIR__ . '/Students.php';
       }
       
 
