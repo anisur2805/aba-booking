@@ -1,0 +1,69 @@
+.aba_booking_settings__form label,
+.aba_booking_settings__form2 label,
+.aba_booking_metabox_wrapper label {
+	min-width: 240px;
+	font-weight: 600;
+	display: inline-block;
+}
+
+.aba_booking_form_group+.aba_booking_form_group {
+	margin-top: 24px;
+}
+
+.aba_booking_settings__form2,
+.aba_booking_settings__form,
+.aba_booking_metabox_wrapper {
+	padding-top: 8px;
+}
+
+.aba_booking_form_group .aba_booking_form_group_inner {
+	display: flex;
+	flex-direction: column;
+
+}
+
+.aba_booking_form_group {
+	display: flex;
+	align-items: center;
+}
+
+.aba_booking_form_group .aba_booking_form_group_inner label {
+	font-weight: 400;
+}
+
+.aba_booking_form_group .aba_booking_form_group_inner label+label {
+	margin-top: 10px;
+}
+
+.aba_booking_form_group div span {
+	display: inline-block;
+}
+
+.aba_booking_form_group div span+span {
+	margin-top: 10px;
+}
+
+
+#aba_booking_image_container img {
+	max-width: 100px;
+	height: auto;
+	margin-top: 12px;
+}
+
+.aba_booking_settings__form2,
+.aba_booking_settings__form {
+	margin-bottom: 40px;
+}
+
+.aba_booking_settings__form .aba_booking_submit_address_form2,
+.aba_booking_settings__form .aba_booking_submit_address_form {
+	margin-top: 25px;
+}
+
+.form-invalid input {
+	border-color: #f00 !important;
+}
+
+.form-invalid p.error {
+	color: #f00 !important;
+}

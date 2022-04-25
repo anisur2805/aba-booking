@@ -1,0 +1,99 @@
+#ABA_BOOKING-popup-creator {
+	background-color: #fff;
+	padding: 30px 30px;
+	position: relative;
+	max-width: 600px;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 4px;
+}
+
+.plainmodal-overlay {
+	width: 200% !important;
+	height: 200% !important;
+}
+
+.plainmodal.plainoverlay {
+	left: 0 !important;
+	top: 0 !important;
+	padding: 0 !important;
+}
+
+#ABA_BOOKING-popup-creator .ABA_BOOKING-close-button {
+	position: absolute;
+	right: -30px;
+	top: -30px;
+	cursor: pointer;
+	border: 0 !important;
+	background: transparent !important;
+}
+
+.ABA_BOOKING-popup-creator-body-inner {
+	display: flex;
+	align-items: center;
+	min-height: 200px;
+}
+
+.ABA_BOOKING-popup-creator-body .ABA_BOOKING-popup-image {
+	max-width: 250px;
+	width: 100%;
+	text-align: center;
+	margin-right: 40px;
+}
+
+/* .plainmodal.plainoverlay {
+	display: block !important;
+	opacity: 1;
+} */
+.ABA_BOOKING-popup-creator-body-header {
+	text-align: center;
+}
+
+.ABA_BOOKING-popup-creator-body .ABA_BOOKING-popup-modal-title {
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 30px;
+	letter-spacing: 0.1px;
+	text-transform: capitalize;
+}
+.ABA_BOOKING-popup-creator-body .ABA_BOOKING-popup-modal-title + div {
+	font-size: 16px;
+	line-height: 24px;
+	margin: 15px 0 20px;
+	font-weight: 400;
+	color: #333;
+}
+
+.ABA_BOOKING-popup-creator-body .ABA_BOOKING-form-group-row + .ABA_BOOKING-form-group-row {
+	margin-top: 12px;
+}
+.ABA_BOOKING-popup-form {
+	width: 100%;
+}
+.ABA_BOOKING-popup-creator-body .ABA_BOOKING-form-group-row .ABA_BOOKING_input {
+	font-size: 14px;
+	width: 100%;
+	height: 45px;
+	padding-left: 10px;
+	color: #333;
+	border: 2px solid #eceff8;
+	background: #eceff8;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	box-sizing: border-box;
+}
+.ABA_BOOKING-popup-creator-body .ABA_BOOKING-form-group-row .ABA_BOOKING_submit {
+	color: #fff;
+	border: 0;
+	background: green;
+	font-size: 20px;
+	line-height: 24px;
+	font-weight: 700;
+	text-transform: uppercase;
+	transition: all 0.4s ease-in;
+}
+
+.ABA_BOOKING-popup-creator-body .ABA_BOOKING-form-group-row .ABA_BOOKING_submit:hover {
+	color: green;
+	background: #ddd;
+}
