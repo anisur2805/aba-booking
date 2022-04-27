@@ -32,7 +32,7 @@ class Student {
         }
 
         if (file_exists($template)) {
-            include $template;
+            // include $template;
         }
     }
 
