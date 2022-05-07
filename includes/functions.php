@@ -11,7 +11,7 @@ function aba_booking_insert($args = []) {
       global $wpdb;
 
       if (empty($args['name'])) {
-            return new \WP_Error('no-name', __('You must provide a name', 'ABA_BOOKING-popup-creator'));
+            return new \WP_Error('no-name', __('You must provide a name', 'aba-booking'));
       }
 
       $defaults = [
@@ -56,7 +56,7 @@ function aba_booking_insert($args = []) {
             );
 
             if (!$inserted) {
-                  return new \WP_Error('failed-to-insert', __('Failed to insert', 'ABA_BOOKING-popup-creator'));
+                  return new \WP_Error('failed-to-insert', __('Failed to insert', 'aba-booking'));
             }
 
             return $wpdb->insert_id;
@@ -231,36 +231,47 @@ add_filter('enter_title_here', 'aba_booking_semester_title');
  * @param array $args
  * @return int|WP_Error
  */
-function aba_booking_insert_users($args = []) {
+function aba_student_insert($args = []) {
       global $wpdb;
 
+      echo "hello from functions";
       if (empty($args['name'])) {
-            return new \WP_Error('no-name', __('You must provide a name', 'ABA_BOOKING-popup-creator'));
+            return new \WP_Error('no-name', __('You must provide a name', 'aba-booking'));
       }
 
       if (empty($args['email'])) {
-            return new \WP_Error('no-email', __('You must provide a email address', 'ABA_BOOKING-popup-creator'));
+            return new \WP_Error('no-email', __('You must provide a email address', 'aba-booking'));
       }
-      if (empty($args['phone'])) {
-            return new \WP_Error('no-phone', __('You must provide a phone number', 'ABA_BOOKING-popup-creator'));
+      if (empty($args['password'])) {
+            return new \WP_Error('no-password', __('You must provide a password number', 'aba-booking'));
+      }
+
+      if (empty($args['student_id'])) {
+            return new \WP_Error('no-student_id', __('You must provide a student_id number', 'aba-booking'));
+      }
+
+      if (empty($args['department'])) {
+            return new \WP_Error('no-department', __('You must provide a department number', 'aba-booking'));
       }
 
       $defaults = [
             'name'            => '',
             'email'           => '',
-            'phone'           => '',
-            'address'         => '',
+            'password'        => '',
+            'student_id'      => '',
+            'department'      => '',
             'created_by'      => get_current_user_id(),
             'created_at'      => current_time('mysql'),
       ];
 
       $data = wp_parse_args($args, $defaults);
-
+      echo "Hello " . "{$wpdb->prefix}aba_booking_student";
 
       $inserted = $wpdb->insert(
-            "{$wpdb->prefix}aba_booking_users",
+            "{$wpdb->prefix}aba_booking_student",
             $data,
             [
+                  '%s',
                   '%s',
                   '%s',
                   '%s',
@@ -271,7 +282,7 @@ function aba_booking_insert_users($args = []) {
       );
 
       if (!$inserted) {
-            return new \WP_Error('failed-to-insert', __('Failed to insert', 'ABA_BOOKING-popup-creator'));
+            return new \WP_Error('failed-to-insert', __('Failed to insert', 'aba-booking'));
       }
 
       return $wpdb->insert_id;

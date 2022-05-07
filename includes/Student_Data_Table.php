@@ -7,7 +7,7 @@ if (!class_exists('WP_List_Table')) {
       require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
-class Subscriber_Data_Table extends \WP_List_Table {
+class Student_Data_Table extends \WP_List_Table {
       private $_items;
       private $users_data;
       
@@ -15,10 +15,10 @@ class Subscriber_Data_Table extends \WP_List_Table {
             global $wpdb;
             if( !empty( $search ) ) {
                   return $wpdb->get_results(
-                        "SELECT id, name, email from {$wpdb->prefix}ABA_BOOKING_subscriber WHERE id LIKE '%{$search}%' OR name Like '%{$search}%' OR email Like '%{$search}%'", ARRAY_A );
+                        "SELECT id, name, email, student_id, department from {$wpdb->prefix}students WHERE id LIKE '%{$search}%' OR name Like '%{$search}%' OR email Like '%{$search}%'", ARRAY_A );
             } else {
                   return $wpdb->get_results(
-                        "SELECT id, name, email from {$wpdb->prefix}ABA_BOOKING_subscriber", ARRAY_A );
+                        "SELECT id, name, email, student_id, department from {$wpdb->prefix}students", ARRAY_A );
             }
       }
 
@@ -47,18 +47,19 @@ class Subscriber_Data_Table extends \WP_List_Table {
             ));
 
             // $data = array_slice($this->_items, ($currentPage - 1) * $perPage, $perPage);
-            $this->users_data = array_slice($this->users_data, ($currentPage - 1) * $perPage, $perPage);
-            $this->_column_headers = array($columns, $hidden, $sortable);
-            $this->items           = $this->users_data;
+            $this->users_data       = array_slice($this->users_data, ($currentPage - 1) * $perPage, $perPage);
+            $this->_column_headers  = array($columns, $hidden, $sortable);
+            $this->items            = $this->users_data;
             // $this->table_data($data);
       }
 
       public function get_columns() {
             $columns = array(
-                  'cb'          => '<input type="checkbox" />',
-                  'name'    => __('Name', 'dbdemo'),
-                  'email'      => __('Email', 'dbdemo'),
-                  // 'action'      => __('Action', 'dbdemo'),
+                  'cb'              => '<input type="checkbox" />',
+                  'student_id'      => __('Student ID', 'dbdemo'),
+                  'name'            => __('Name', 'dbdemo'),
+                  'email'           => __('Email', 'dbdemo'),
+                  'department'      => __('Department', 'dbdemo'),
             );
 
             return $columns;
@@ -83,9 +84,11 @@ class Subscriber_Data_Table extends \WP_List_Table {
 
       public function get_sortable_columns() {
             return array(
-                  'id'     => array('id', false),
-                  'name' => array('name', false),
-                  'email'  => array('email', false),
+                  'id'              => array('id', false),
+                  'student_id'      => array('student_id', false),
+                  'name'            => array('name', false),
+                  'email'           => array('email', false),
+                  'department'      => array('department', false),
             );
       }
 
@@ -126,7 +129,7 @@ class Subscriber_Data_Table extends \WP_List_Table {
 
       private function table_data($data) {
             global $wpdb;
-            $data = $wpdb->get_results($wpdb->prepare("SELECT name FROM {$wpdb->prefix}persons"), ARRAY_A);
+            $data = $wpdb->get_results($wpdb->prepare("SELECT name FROM {$wpdb->prefix}students"), ARRAY_A);
 
             if (isset($_REQUEST['s'])) {
                   $data2 = array_filter($data, array($this, 'dbdemo_user_search'));
@@ -140,6 +143,8 @@ class Subscriber_Data_Table extends \WP_List_Table {
                   case 'id':
                   case 'name':
                   case 'email':
+                  case 'student_id':
+                  case 'department':
                         return $item[$column_name];
 
                   default:

@@ -7,35 +7,32 @@ namespace Aba_Booking;
 class Installer {
     public function run() {
         $this->add_version();
-        $this->create_tables();
+        $this->create_student_table();
         $this->create_subscriber_tables();
         $this->create_users_tables();
     }
 
     public function add_version() {
-        $installed = get_option( 'ABA_BOOKING_popup_installed' );
+        $installed = get_option( 'aba_booking_installed' );
         if ( !$installed ) {
-            update_option( 'ABA_BOOKING_popup_installed', time() );
+            update_option( 'aba_booking_installed', time() );
         }
 
-        update_option( 'ABA_BOOKING_popup_version', ABA_BOOKING_VERSION );
+        update_option( 'aba_booking_version', ABA_BOOKING_VERSION );
     }
 
-    public function create_tables() {
+    public function create_student_table() {
         global $wpdb;
 
         $charset_collate = $wpdb->get_charset_collate();
 
-        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}ABA_BOOKING_popup`(
+        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}aba_booking_student`(
             id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
             name varchar(100) NOT NULL DEFAULT '',
-            pc_active int(1) DEFAULT NULL,
-            pc_auto_hide_pu int(1) DEFAULT NULL,
-            pc_show_in_delay varchar(10) DEFAULT NULL,
-            pc_url varchar(100) DEFAULT NULL,
-            pc_image_size varchar(100) DEFAULT NULL,
-            pc_ww_show varchar(100) DEFAULT NULL,
-            pc_show_on_exit BOOLEAN NOT NULL,
+            email varchar(100) DEFAULT NULL,
+            student_id varchar(15) DEFAULT NULL,
+            password varchar(15) DEFAULT NULL,
+            department varchar(100) DEFAULT NULL,
             created_at DATETIME NOT NULL,
             created_by BIGINT(20) UNSIGNED NOT NULL,
             PRIMARY KEY (`id`)
