@@ -15,10 +15,10 @@ class Student_Data_Table extends \WP_List_Table {
             global $wpdb;
             if( !empty( $search ) ) {
                   return $wpdb->get_results(
-                        "SELECT id, name, email, student_id, department from {$wpdb->prefix}students WHERE id LIKE '%{$search}%' OR name Like '%{$search}%' OR email Like '%{$search}%'", ARRAY_A );
+                        "SELECT id, name, email, student_id, department from {$wpdb->prefix}aba_booking_student WHERE id LIKE '%{$search}%' OR name Like '%{$search}%' OR email Like '%{$search}%'", ARRAY_A );
             } else {
                   return $wpdb->get_results(
-                        "SELECT id, name, email, student_id, department from {$wpdb->prefix}students", ARRAY_A );
+                        "SELECT id, name, email, student_id, department from {$wpdb->prefix}aba_booking_student", ARRAY_A );
             }
       }
 
@@ -129,7 +129,7 @@ class Student_Data_Table extends \WP_List_Table {
 
       private function table_data($data) {
             global $wpdb;
-            $data = $wpdb->get_results($wpdb->prepare("SELECT name FROM {$wpdb->prefix}students"), ARRAY_A);
+            $data = $wpdb->get_results($wpdb->prepare("SELECT name FROM {$wpdb->prefix}aba_booking_student"), ARRAY_A);
 
             if (isset($_REQUEST['s'])) {
                   $data2 = array_filter($data, array($this, 'dbdemo_user_search'));
