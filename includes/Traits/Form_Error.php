@@ -8,15 +8,13 @@ trait Form_Error {
 
     public $errors = [];
     
-    function has_errors( $key ) {
-        return isset( $this->errors[ $key ] ) ? true : false;
+    function has_error( $key ) {
+        // return isset( $this->errors[ $key ] ) ? true : false;
+        return array_key_exists( $key, $this->errors );
     }
 
-    function get_error( $key ) {
-        if( isset( $this->errors[ $key ] ) ) {
-            return $this->errors[ $key ];
-        }
-
-        return false;
+    function get_error( $key ) { 
+        return array_key_exists( $key, $this->errors ) ? $this->errors[ $key ] : false;
     }
+    
 }
