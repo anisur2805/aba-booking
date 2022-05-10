@@ -21,6 +21,11 @@ class Assets {
         'version' => filemtime(ABA_BOOKING_PATH . '/assets/js/aba-booking-metabox.js'),
         'deps'    => [],
       ],
+      'admin-script'   => [
+       'src'     => OOP_ACADEMY_ASSETS . '/js/admin.js',
+       'version' => filemtime( OOP_ACADEMY_PATH . '/assets/js/admin.js' ),
+       'deps'    => ['jquery', 'wp-util'],
+      ],
     ];
   }
 
