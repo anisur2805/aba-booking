@@ -2,15 +2,14 @@
 
 namespace Aba_Booking;
 
-use Aba_Booking\Admin\Menu;
+use Aba_Booking\Admin\Data_Tables\Student_Data_Table;
 use Aba_Booking\Admin\Metabox\Courses_Metabox;
 use Aba_Booking\Admin\Metabox\Departments_Metabox;
 use Aba_Booking\Admin\Metabox\Semester_Metabox;
 use Aba_Booking\Admin\Post_Type\Courses;
 use Aba_Booking\Admin\Post_Type\Departments;
 use Aba_Booking\Admin\Post_Type\Semester;
-use Aba_Booking\Data_Table;
-use Aba_Booking\Traits\Form_Error;
+// use Aba_Booking\Data_Table;
 
 class Admin {
 
@@ -21,7 +20,8 @@ class Admin {
         new Admin\Menu( $student );
 
         // Instantiate Data Table
-        new Data_Table();
+        // new Data_Table();
+        // new Student_Data_Table();
 
         // Instantiate Subscriber Data Table
         // new Subscriber_Data_Table();
@@ -34,7 +34,6 @@ class Admin {
 
         //Instantiate Course Meta box
         new Semester_Metabox();
-
 
         // Instantiate Courses CPT
         new Courses();
@@ -50,12 +49,14 @@ class Admin {
 
     public function dispatch_actions( $student ) {
         add_action('admin_init', array( $student, 'student_insert_form_handler' ) );
+        add_action( 'admin_post_aba_delete_student', [$student, 'delete_student'] );
     }
     
 
     public function load_assets() {
         wp_enqueue_style('aba-booking-metabox');
         wp_enqueue_style('aba-booking-datepicker-style');
+        wp_enqueue_style('aba-booking-style');
         wp_enqueue_script('jquery-ui-datepicker');
         wp_enqueue_script('aba-booking-metabox-script');
         wp_enqueue_script('aba-booking-main-ajax');

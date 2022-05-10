@@ -1,5 +1,6 @@
 <?php
 
+use Aba_Booking\Admin\Data_Tables\Student_Data_Table as Data_TablesStudent_Data_Table;
 use Aba_Booking\Student_Data_Table;
 ?>
 <div class="wrap">
@@ -7,7 +8,7 @@ use Aba_Booking\Student_Data_Table;
     <a href="<?php echo admin_url('admin.php?page=aba-booking-student&action=new') ?>" class="page-title-action">Add New</a>
 
     <?php
-        $student_data_table = new Student_Data_Table();
+        $student_data_table = new Data_TablesStudent_Data_Table();
     ?>
     <div class="wrap">
         <form id="art-search-form" method="GET">
