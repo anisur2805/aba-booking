@@ -113,35 +113,35 @@ function aba_booking_addresses_count() {
  *
  * @return object
  */
-function aba_booking_get_address($id) {
+function aba_booking_get_students($id) {
       global $wpdb; // Global WPDB class object
 
-      $address = wp_cache_get('book-' . $id, 'address');
-      if (false === $address) {
-            $address = $wpdb->get_row(
+      $student = wp_cache_get('abas-' . $id, 'student');
+      if (false === $student) {
+            $student = $wpdb->get_row(
                   $wpdb->prepare(  // use prepare for avoid sql injection
-                        "SELECT  * FROM {$wpdb->prefix}ac_addresses WHERE id = %d",
+                        "SELECT  * FROM {$wpdb->prefix}aba_booking_student WHERE id = %d",
                         $id // select by id
                   )
             );
 
-            wp_cache_set('book-' . $id, $address, 'address');
+            wp_cache_set('abas-' . $id, $student, 'student');
       }
-      return $address;
+      return $student;
 }
 
 /**
- * Delete an address
+ * Delete an student
  *
  * @param int $id
  *
  * @return int|boolean
  */
-function aba_booking_delete_address($id) {
+function aba_booking_delete_student($id) {
       global $wpdb;
 
       return $wpdb->delete(
-            $wpdb->prefix . 'ac_addresses',
+            $wpdb->prefix . 'aba_booking_student',
             ['id' => $id],
             ['%d'],
       );
@@ -265,7 +265,6 @@ function aba_student_insert($args = []) {
       ];
 
       $data = wp_parse_args($args, $defaults);
-      echo "Hello " . "{$wpdb->prefix}aba_booking_student";
 
       $inserted = $wpdb->insert(
             "{$wpdb->prefix}aba_booking_student",
