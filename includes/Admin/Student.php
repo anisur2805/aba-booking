@@ -93,8 +93,6 @@ class Student {
 
         $insert_student_id = aba_student_insert($args);
 
-        var_dump($insert_student_id);
-
         if (is_wp_error($insert_student_id)) {
             wp_die($insert_student_id->get_error_message());
         }
@@ -111,7 +109,7 @@ class Student {
     }
 
     public function delete_student() {
-        if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'aba_delete_student' ) ) {
+        if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'aba-delete-student' ) ) {
             wp_die( 'Are you cheating mia!' );
         }
 
@@ -123,7 +121,6 @@ class Student {
 
         if ( aba_booking_delete_student( $id ) ) {
             $redirected_to = admin_url( "admin.php?page=aba-booking-student&student-deleted=true" );
-
         } else {
             $redirected_to = admin_url( "admin.php?page=aba-booking-student&student-deleted=false" );
         }

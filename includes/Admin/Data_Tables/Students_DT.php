@@ -1,15 +1,23 @@
 <?php
 
-namespace Aba_Booking;
+namespace Aba_Booking\Admin\Data_Tables;
 
 
 if (!class_exists('WP_List_Table')) {
       require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
-class Student_Data_Table extends \WP_List_Table {
+class Students_DT extends \WP_List_Table {
       private $_items;
       private $users_data;
+
+      public function __construct() {
+            parent::__construct( [
+                'singular' => 'student',
+                'plural'   => 'students',
+                'ajax'     => false,
+            ] );
+      }
       
       private function get_users_data( $search = '' ) {
             global $wpdb;
@@ -56,8 +64,8 @@ class Student_Data_Table extends \WP_List_Table {
       public function get_columns() {
             $columns = array(
                   'cb'              => '<input type="checkbox" />',
-                  'student_id'      => __('Student ID', 'dbdemo'),
                   'name'            => __('Name', 'dbdemo'),
+                  'student_id'      => __('Student ID', 'dbdemo'),
                   'email'           => __('Email', 'dbdemo'),
                   'department'      => __('Department', 'dbdemo'),
             );
@@ -69,11 +77,22 @@ class Student_Data_Table extends \WP_List_Table {
             return "<input type='checkbox' value='{$item["id"]}'/>"; }
 
       public function column_name($item) {
-            $nonce = wp_create_nonce('dbdemo_edit');
+            $nonce = wp_create_nonce('student-edit');
             $actions = [];
 
-            $actions['edit']   = sprintf('<a href="?page=%s&pid=%s&n=%s">Edit</a>', $_REQUEST['page'], $item['id'], $nonce);
-            $actions['delete']   = sprintf('<a href="?page=%s&pid=%s&n=%s&action=delete">Delete</a>', $_REQUEST['page'], $item['id'], $nonce);
+            $actions['edit']   = sprintf('<a href="?page=%s&action=edit&id=%s">Edit</a>', $_REQUEST['page'], $item['id'] );
+            $actions['delete'] = sprintf( 
+			'<a href="#" class="submit_delete" title="%s" data-id="%s">%s</a>',
+		__( 'Delete', 'aba-booking' ), $item['id'], __( 'Delete', 'aba-booking' ) );
+
+            // $actions['delete'] = sprintf( 
+            //       	'<a href="%s" class="submitdelete" title="%s" onclick="return confirm(\'Are you sure?\');">%s</a>', 
+            //       wp_nonce_url( 
+            //       	admin_url( 
+            //       		'admin-post.php?action=aba-delete-student&id=' . $item['id'] ),
+            //       		'aba-delete-student'), $item['id'],
+            //       __( 'Delete', 'aba-booking' ), __( 'Delete', 'aba-booking' ) );
+
 
             return sprintf('<strong>%1$s</strong>%2$s', $item['name'], $this->row_actions($actions));
       }

@@ -49,7 +49,7 @@ class Admin {
 
     public function dispatch_actions( $student ) {
         add_action('admin_init', array( $student, 'student_insert_form_handler' ) );
-        add_action( 'admin_post_aba_delete_student', [$student, 'delete_student'] );
+        // add_action( 'admin_post_aba-delete-student', [$student, 'delete_student'] );
     }
     
 
@@ -59,6 +59,6 @@ class Admin {
         wp_enqueue_style('aba-booking-style');
         wp_enqueue_script('jquery-ui-datepicker');
         wp_enqueue_script('aba-booking-metabox-script');
-        wp_enqueue_script('aba-booking-main-ajax');
+        wp_enqueue_script('aba-booking-main-script');
     }
 }

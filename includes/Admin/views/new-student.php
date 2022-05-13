@@ -38,7 +38,7 @@
             <div class="aba_form_group">
                   <label for="student_id">Student ID</label>
                   <div>
-                        <input readonly value="<?php echo rand(1, 1000); ?>" type="text" class="regular-text" id="student_id" name="student_id" />
+                        <input readonly value="<?php echo get_student_roll(); ?>" type="text" class="regular-text" id="student_id" name="student_id" />
                   </div>
             </div>
 
