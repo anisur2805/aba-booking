@@ -10,10 +10,10 @@ class Assets {
 
   public function get_scripts() {
     return [
-      'aba-booking-main-ajax'      => [
+      'aba-booking-main-script'      => [
         'src'     => ABA_BOOKING_ASSETS . '/js/main-script.js',
         'version' => filemtime(ABA_BOOKING_PATH . '/assets/js/main-script.js'),
-        'deps'    => ['jquery'],
+        'deps'    => ['jquery', 'wp-util'],
       ],
 
       'aba-booking-metabox-script' => [
@@ -63,13 +63,13 @@ class Assets {
       wp_register_style($handle, $style['src'], $deps, $style['version']);
     }
 
-    // wp_localize_script('aba-booking-main-ajax', 'ABA_BOOKINGPopup', [
-    //   'nonce'   => wp_create_nonce('aba-booking-ajax-nonce'),
-    //   'ajaxUrl' => admin_url('admin-ajax.php'),
-    //   'confirm' => __('Are you sure?', 'aba-booking-popup-creator'),
-    //   'error'   => __('Something went wrong in Admin area', 'aba-booking-popup-creator'),
-    //   'success'   => __('Submitted successfully', 'aba-booking-popup-creator'),
-    // ]);
+    wp_localize_script('aba-booking-main-script', 'abaBooking', [
+      'nonce'   => wp_create_nonce('aba-booking-student-nonce'),
+      'ajaxUrl' => admin_url('admin-ajax.php'),
+      'confirm' => __('Are you sure?', 'aba-booking'),
+      'error'   => __('Something went wrong', 'aba-booking'),
+      'success'   => __('Submitted successfully', 'aba-booking'),
+    ]);
 
   }
 }

@@ -8,6 +8,29 @@ class Ajax {
 
         add_action('wp_ajax_ABA_BOOKING_add_contact', array($this, 'ABA_BOOKING_add_contact'));
         add_action('wp_ajax_ABA_BOOKING_modal_form', array($this, 'ABA_BOOKING_modal_form'));
+        add_action('wp_ajax_aba-booking-delete-student', array($this, 'delete_student_ajax'));
+    }
+
+    public function delete_student_ajax() {
+        if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'aba-booking-student-nonce' ) ) {
+            wp_die( 'Are you cheating mia, huh!' );
+        }
+
+        if ( !current_user_can( 'manage_options' ) ) {
+            wp_die( 'Are you cheating!' );
+        }
+
+        $id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ) : 0;
+
+        // if ( aba_booking_delete_student( $id ) ) {
+        //     $redirected_to = admin_url( "admin.php?page=aba-booking-student&student-deleted=true" );
+        // } else {
+        //     $redirected_to = admin_url( "admin.php?page=aba-booking-student&student-deleted=false" );
+        // }
+
+        // wp_redirect( $redirected_to );
+        // exit;
+        wp_send_json_success(aba_booking_delete_student( $id ));
     }
 
     public function ABA_BOOKING_dispatch() {
@@ -55,6 +78,6 @@ class Ajax {
         var_dump($firstName);
         die();
     }
-
+    
     
 }
