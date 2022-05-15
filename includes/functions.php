@@ -362,21 +362,21 @@ function author_level_up() {
 
   /**
    * Generate Student id
-   * 201811050101
+   * ex. 201811050101
    */
 function get_student_roll() {
       global $wpdb;
-      $student_id = $wpdb->get_row(
-            // $wpdb->prepare( 
-            //       "SELECT student_id FROM {$wpdb->prefix}aba_booking_student ORDER DESC"
-            // )
-      );
-
-      // echo "<pre>";
-      //       var_dump($student_id);
-      // die();
-
+      $id = 'id';
+      $student_id = $wpdb->get_row( $wpdb->prepare( "SELECT student_id FROM {$wpdb->prefix}aba_booking_student ORDER BY %s DESC", $id ), ARRAY_A );
+      
       $roll_start = 1;
-      $date       = date( 'Ymd' ) . '0' . $roll_start;
-      return $date;
+      $date       = date( 'Ymd' );
+
+      $validate_student_id = isset( $student_id['student_id'] ) ? $student_id['student_id'] : 1;
+      $init_student_id = $date . $roll_start;
+      $exists_id = $validate_student_id + $roll_start;      
+      $std_id_res = isset( $student_id['student_id'] ) ? $exists_id : $init_student_id;
+
+      return $std_id_res;
 }
+get_student_roll();
