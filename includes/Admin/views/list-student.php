@@ -19,6 +19,8 @@ use Aba_Booking\Admin\Data_Tables\Students_DT;
     <h1 class="wp-heading-inline">Students List</h1>
     <a href="<?php echo admin_url('admin.php?page=aba-booking-student&action=new') ?>" class="page-title-action">Add New</a>
 
+    <a href="<?php echo admin_url('admin.php?page=aba-booking-student&action=req-apt') ?>" class="page-title-action">Request an Appointment</a>
+
     <?php
         $student_data_table = new Students_DT();
     ?>
