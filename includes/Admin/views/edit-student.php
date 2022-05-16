@@ -6,7 +6,6 @@
             </div>
       <?php }?>
       <form method="post" class="arpc_settings__form2">
-            
             <div class="aba_form_group<?php echo $this->has_error( 'name' ) ? ' form-invalid' : ''; ?>">
                   <label for="name">Name*</label>
                   <div>

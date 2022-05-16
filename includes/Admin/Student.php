@@ -19,8 +19,8 @@ class Student {
                 $student  = aba_booking_get_students( $id );
                 $template = __DIR__ . '/views/edit-student.php';
                 break;
-            case 'view':
-                $template = __DIR__ . '/views/view-student.php';
+            case 'req-apt':
+                $template = __DIR__ . '/views/student-req-apt.php';
                 break;
             default:
                 $template = __DIR__ . '/views/list-student.php';
