@@ -1,10 +1,6 @@
 <div class="wrap">
     <h1 class="wp-heading-inline">Add Student Info</h1>
-      <?php if ( isset( $_GET['inserted'] ) ) {?>
-            <div class="notice notice-success">
-                  <p><?php _e( 'Student added successfully!', 'aba-booking' );?></p>
-            </div>
-      <?php }?>
+
       <form method="post" class="arpc_settings__form2">
             <div class="aba_form_group<?php echo $this->has_error( 'name' ) ? ' form-invalid' : ''; ?>">
                   <label for="name">Name*</label>

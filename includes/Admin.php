@@ -49,6 +49,7 @@ class Admin {
 
     public function dispatch_actions( $student ) {
         add_action('admin_init', array( $student, 'student_insert_form_handler' ) );
+        add_action('admin_init', array( $student, 'request_appt_form_handler' ) );
         // add_action( 'admin_post_aba-delete-student', [$student, 'delete_student'] );
     }
     
