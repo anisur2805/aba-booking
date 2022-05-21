@@ -1,10 +1,10 @@
 <div class="wrap">
     <h1 class="wp-heading-inline">Edit Student Info</h1>
-      <?php if ( isset( $_GET['student-update'] ) ) {?>
-            <div class="notice notice-success">
-                  <p><?php _e( 'Update Information successfully!', 'aba-booking' );?></p>
-            </div>
-      <?php }?>
+
+      <?php 
+        display_crud_status( 'student-update', 'Update Information successfully!' );
+      ?>
+
       <form method="post" class="arpc_settings__form2">
             <div class="aba_form_group<?php echo $this->has_error( 'name' ) ? ' form-invalid' : ''; ?>">
                   <label for="name">Name*</label>

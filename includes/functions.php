@@ -107,7 +107,7 @@ function aba_booking_addresses_count() {
 }
 
 /**
- * Fetch a single contact form DB
+ * Fetch a single student form DB
  *
  * @param int $id
  *
@@ -129,6 +129,7 @@ function aba_booking_get_students($id) {
       }
       return $student;
 }
+
 
 /**
  * Delete an student
@@ -185,6 +186,25 @@ function aba_booking_input_field($type = "text", $id = '', $name = '', $placehol
       );
 }
 
+/**
+ * 
+ *
+ * @param string $title
+ * @param string $new_title
+ * @param string $page
+ * @return $title
+ */
+function aba_booking_enter_title( $title, $new_title, $page ) {
+    $screen = get_current_screen();
+
+    if ( $page == $screen->post_type ) {
+        $title = __( $new_title, 'aba-booking' );
+    }
+
+    return $title;
+}
+
+// add_filter('enter_title_here', 'aba_booking_enter_title', 10, 3);
 
 // Change Add title to 
 function aba_booking_courses_title($title) {
@@ -380,3 +400,116 @@ function get_student_roll() {
       return $std_id_res;
 }
 get_student_roll();
+
+/**
+ * Insert users to db
+ *
+ * @param array $args
+ * @return int|WP_Error
+ */
+function aba_student_req_appt_insert($args = []) {
+    global $wpdb;
+
+    if (empty($args['name'])) {
+          return new \WP_Error('no-name', __('You must provide a name', 'aba-booking'));
+    }
+
+    if (empty($args['email'])) {
+          return new \WP_Error('no-email', __('You must provide a email address', 'aba-booking'));
+    }
+
+    if (empty($args['student_id'])) {
+          return new \WP_Error('no-student_id', __('You must provide a student_id number', 'aba-booking'));
+    }
+
+    if (empty($args['department'])) {
+          return new \WP_Error('no-department', __('You must provide a department number', 'aba-booking'));
+    }
+    
+    if (empty($args['message'])) {
+          return new \WP_Error('no-message', __('You must provide a message', 'aba-booking'));
+    }
+
+    $defaults = [
+          'name'            => '',
+          'email'           => '',
+          'student_id'      => '',
+          'department'      => '',
+          'message'      => '',
+    ];
+
+    $data = wp_parse_args($args, $defaults);
+    $inserted = $wpdb->insert(
+        "{$wpdb->prefix}aba_student_req_appt",
+        $data,
+        [
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+        ]
+    );
+
+    if ( !$inserted ) {
+        return new \WP_Error( 'failed-to-insert', __( 'Failed to insert', 'aba-booking' ) );
+    }
+
+    return $wpdb->insert_id;
+}
+
+/**
+ * Fetch current student form DB for request appt.
+ *
+ * @param int $id
+ *
+ * @return object
+ */
+function aba_booking_req_appt( $id ) {
+    global $wpdb; // Global WPDB class object
+
+    // $student_req_appt = wp_cache_get( 'aba-' . $id, 'student_req_appt' );
+    // if ( false === $student_req_appt ) {
+        $student_req_appt = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT  * FROM {$wpdb->prefix}aba_booking_student WHERE id = %d",
+                $id
+            )
+        );
+
+        // wp_cache_set( 'aba-' . $id, $student_req_appt, 'student_req_appt' );
+    // }
+    return $student_req_appt;
+ 
+}
+
+/**
+ * Collect student id for request appointment
+ *
+ * @return $student_id int
+ */
+function get_student_id() {
+    global $wpdb;
+    $id = 'id';
+    $student_id = $wpdb->get_row(
+        $wpdb->prepare( 
+            "SELECT id FROM {$wpdb->prefix}aba_booking_student ORDER BY %s DESC", $id ), ARRAY_A
+    );
+
+    return $student_id;
+}
+
+/**
+ * Display crud status
+ * 
+ * @param string $key
+ * 
+ * return void
+ */
+function display_crud_status( $key, $status_msg, $status_type = 'success' ) {
+    if ( isset( $_GET[ $key ] ) ) {?>
+        <div class="notice notice-<?php echo $status_type?>">
+            <p><?php _e( $status_msg, 'aba-booking' );?></p>
+        </div>
+    <?php }
+}

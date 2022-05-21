@@ -8,8 +8,9 @@ class Installer {
     public function run() {
         $this->add_version();
         $this->create_student_table();
-        $this->create_subscriber_tables();
-        $this->create_users_tables();
+        $this->create_student_req_appt_table();
+        // $this->create_subscriber_tables();
+        // $this->create_users_tables();
     }
 
     public function add_version() {
@@ -33,6 +34,31 @@ class Installer {
             student_id varchar(15) DEFAULT NULL,
             password varchar(15) DEFAULT NULL,
             department varchar(100) DEFAULT NULL,
+            created_at DATETIME NOT NULL,
+            created_by BIGINT(20) UNSIGNED NOT NULL,
+            PRIMARY KEY (`id`)
+        ) $charset_collate";
+
+        if ( !function_exists( 'dbDelta' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        }
+
+        dbDelta( $schema );
+    }     
+    
+    public function create_student_req_appt_table() {
+        global $wpdb;
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}aba_student_req_appt`(
+            id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+            name varchar(100) NOT NULL DEFAULT '',
+            email varchar(100) DEFAULT NULL,
+            student_id varchar(15) DEFAULT NULL,
+            password varchar(15) DEFAULT NULL,
+            department varchar(100) DEFAULT NULL,
+            message varchar(255) DEFAULT NULL,
             created_at DATETIME NOT NULL,
             created_by BIGINT(20) UNSIGNED NOT NULL,
             PRIMARY KEY (`id`)
