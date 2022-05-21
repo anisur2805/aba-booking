@@ -1,49 +1,58 @@
 <?php
 
- $formStructure = [
-  [
-   "name"          => "",
-   "className"     => "aba_form_group",
-   "concreteClass" => $this->has_error( 'name' ) ? ' form-invalid' : '',
-   "label"         => "name",
-   "labelName"     => "Name*",
-   "type"          => "text",
-   "inputClass"    => "regular-text",
-   "isRequire"     => true,
-  ],
-  [
-   "name"          => "",
-   "className"     => "aba_form_group",
-   "concreteClass" => $this->has_error( 'name' ) ? ' form-invalid' : '',
-   "label"         => "name",
-   "labelName"     => "Name*",
-   "type"          => "text",
-   "inputClass"    => "regular-text",
-   "isRequire"     => true,
-  ],
+      $formStructure = [
+            [
+                  "name"          => "",
+                  "className"     => "aba_form_group",
+                  "concreteClass" => $this->has_error( 'name' ) ? ' form-invalid' : '',
+                  "label"         => "name",
+                  "labelName"     => "Name*",
+                  "type"          => "text",
+                  "inputClass"    => "regular-text",
+                  "isRequire"     => true,
+            ],
+            [
+                  "name"          => "",
+                  "className"     => "aba_form_group",
+                  "concreteClass" => $this->has_error( 'name' ) ? ' form-invalid' : '',
+                  "label"         => "name",
+                  "labelName"     => "Name*",
+                  "type"          => "text",
+                  "inputClass"    => "regular-text",
+                  "isRequire"     => true,
+            ],
 
- ];
+      ];
 
- echo "<pre>";
+      echo "<pre>";
 
- function concreteClass( $className, $concreteClass ) {
+      function concreteClass( $className, $concreteClass ) {
 
-  return $className . " " . $concreteClass;
+            return $className . " " . $concreteClass;
 
- }
+      }
 
- foreach ( $formStructure as $form ) {
+      function isRequire($value){
 
-  echo '<div class="' . concreteClass( $form['className'], $form['concreteClass'] ) . '">
-                  <label for="' . $form['label'] . '">' . $form['labelName'] . '</label>
-                  <div>
-                        <input type="text" class="regular-text" name="name" id="name" require />
+            return  $value ? "require" : "";
+      }
+
+      function inputFormat( $form ) {
+            return '<div class="' . concreteClass( $form['className'], $form['concreteClass'] ) . '">
+                        <label for="' . $form['label'] . '">' . $form['labelName'] . '</label>
+                    <div>
+                        <input type="text" 
+                        class="'. $form['inputClass'] .'" 
+                        name="'. $form['name'] .'" 
+                        id="'. $form['name'] .'"  
+                        ' . isRequire($form['isRequire'])  . ' />
+                   </div>
+
                   </div>
+                  ';
+      }
 
-            </div>
-            ';
-
- }
+      
 
 ?>
 
@@ -57,6 +66,16 @@
             </div>
       <?php }?>
       <form method="post" class="arpc_settings__form2">
+
+            <?php 
+            
+            foreach ($formStructure as $form ) {
+                  echo inputFormat($form);
+            }
+            
+            ?>
+
+
             <div class="aba_form_group<?php echo $this->has_error( 'name' ) ? ' form-invalid' : ''; ?>">
                   <label for="name">Name*</label>
                   <div>
@@ -105,8 +124,8 @@
             </div>
 
             <?php
-             wp_nonce_field( 'req-appt' );
-             submit_button( 'Request', 'primary', 'request_an_appt' );
+                  wp_nonce_field( 'req-appt' );
+                  submit_button( 'Request', 'primary', 'request_an_appt' );
             ?>
       </form>
 </div>
