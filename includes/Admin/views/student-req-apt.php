@@ -2,7 +2,7 @@
     <h1 class="wp-heading-inline"><?php esc_html_e('Request an Appointment', 'aba-booking'); ?></h1>
       <?php if ( isset( $_GET['requested'] ) ) {?>
             <div class="notice notice-success">
-                  <p><?php _e( 'Request for appointment sent!', 'aba-booking' );?></p>
+                  <p><?php esc_html_e( 'Request for appointment sent!', 'aba-booking' );?></p>
             </div>
       <?php }?>
       <form method="post" class="arpc_settings__form2">
