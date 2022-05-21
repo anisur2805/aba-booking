@@ -1,14 +1,28 @@
 <?php
 
-use Aba_Booking\Admin\Data_Tables\Student_Data_Table as Data_TablesStudent_Data_Table;
-use Aba_Booking\Student_Data_Table;
-?>
+use Aba_Booking\Admin\Data_Tables\Students_DT;
+
+    if ( isset( $_GET['inserted'] ) ) {?>
+        <div class="notice notice-success">
+            <p><?php _e( 'Student added successfully!', 'aba-booking' );?></p>
+        </div>
+    <?php }
+
+    if ( isset( $_GET['student-deleted'] ) && $_GET['student-deleted'] == 'true') {?>
+        <div class="notice notice-success">
+            <p><?php _e( 'Student deleted successfully!', 'aba-booking' );?></p>
+        </div>
+    <?php }
+    
+?> 
 <div class="wrap">
     <h1 class="wp-heading-inline">Students List</h1>
     <a href="<?php echo admin_url('admin.php?page=aba-booking-student&action=new') ?>" class="page-title-action">Add New</a>
 
+    <a href="<?php echo admin_url('admin.php?page=aba-booking-student&action=req-apt') ?>" class="page-title-action">Request an Appointment</a>
+
     <?php
-        $student_data_table = new Data_TablesStudent_Data_Table();
+        $student_data_table = new Students_DT();
     ?>
     <div class="wrap">
         <form id="art-search-form" method="GET">

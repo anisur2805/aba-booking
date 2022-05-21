@@ -1,29 +1,29 @@
 ; (function ($) {
-	$(document).ready(function () {
+	$("table.wp-list-table.students").on("click", "a.submit_delete", function (e) {
+		e.preventDefault();
 
-		$(".ABA_BOOKING_settings__form").on("submit", function (e) {
-			e.preventDefault();
+		if (!confirm(abaBooking.confirm)) {
+			return;
+		}
 
-			var values = $(this).serialize();
+		var self = $(this),
+			id = self.data("id");
 
-			if (values) {
-
-				const data = {
-					action: 'ABA_BOOKING_add_contact',
-					status: 'enabled',
-					nonce: ABA_BOOKINGPopup.nonce,
-					popup_settings_data : values
-				}
-
-				$.post(ABA_BOOKINGPopup.ajaxUrl, data, function (response) {
-					if (response) {
-						console.log(ABA_BOOKINGPopup.success);
-					}
-				}).fail(function () {
-					console.error(ABA_BOOKINGPopup.error);
-				})
-					.always(() => console.log('form submitted'))
+		wp.ajax.send('aba-booking-delete-student', {
+			data: {
+				id: id,
+				_wpnonce: abaBooking.nonce,
 			}
+		})
+		.done(function (response) {
+			self.closest("tr")
+				.css("background-color", "red")
+				.hide(400, function () {
+					$(this).remove();
+				});
+		})
+		.fail(function () {
+			alert(abaBooking.error);
 		});
 	});
 

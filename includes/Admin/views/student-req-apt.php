@@ -1,8 +1,8 @@
 <div class="wrap">
-    <h1 class="wp-heading-inline">Add Student Info</h1>
-      <?php if ( isset( $_GET['inserted'] ) ) {?>
+    <h1 class="wp-heading-inline"><?php esc_html_e('Request an Appointment', 'aba-booking'); ?></h1>
+      <?php if ( isset( $_GET['requested'] ) ) {?>
             <div class="notice notice-success">
-                  <p><?php _e( 'Student added successfully!', 'aba-booking' );?></p>
+                  <p><?php _e( 'Request for appointment sent!', 'aba-booking' );?></p>
             </div>
       <?php }?>
       <form method="post" class="arpc_settings__form2">
@@ -25,16 +25,7 @@
                         <p class="description error"> <?php echo $this->get_error( 'email' ); ?> </p>
                   <?php }?>
             </div>
-            <div class="aba_form_group<?php echo $this->has_error( 'password' ) ? ' form-invalid' : ''; ?>">
-                  <label for="password">Password*</label>
-                  <div>
-                        <input type="password" class="regular-text" id="password" name="password" require />
-                  </div>
-                  <?php if ( $this->has_error( 'password' ) ) {?>
-                        <p class="description error"> <?php echo $this->get_error( 'password' ); ?> </p>
-                  <?php }?>
-            </div>
-
+            
             <div class="aba_form_group">
                   <label for="student_id">Student ID</label>
                   <div>
@@ -51,10 +42,20 @@
                         <p class="description error"> <?php echo $this->get_error( 'department' ); ?> </p>
                   <?php }?>
             </div>
+            
+            <div class="aba_form_group<?php echo $this->has_error( 'message' ) ? ' form-invalid' : ''; ?>">
+                  <label for="message">Message*</label>
+                  <div>
+                        <textarea class="regular-text" id="message" name="message" require></textarea>
+                  </div>
+                  <?php if ( $this->has_error( 'message' ) ) {?>
+                        <p class="description error"> <?php echo $this->get_error( 'message' ); ?> </p>
+                  <?php }?>
+            </div>
 
             <?php
-            wp_nonce_field( 'new-student' );
-            submit_button( 'Add Student', 'primary', 'insert_new_student' );
+            wp_nonce_field( 'req-appt' );
+            submit_button( 'Request', 'primary', 'request_an_appt' );
             ?>
       </form>
 </div>

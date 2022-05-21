@@ -137,7 +137,7 @@ function aba_booking_get_students($id) {
  *
  * @return int|boolean
  */
-function aba_booking_delete_student($id) {
+function aba_booking_delete_student( $id ) {
       global $wpdb;
 
       return $wpdb->delete(
@@ -234,7 +234,6 @@ add_filter('enter_title_here', 'aba_booking_semester_title');
 function aba_student_insert($args = []) {
       global $wpdb;
 
-      echo "hello from functions";
       if (empty($args['name'])) {
             return new \WP_Error('no-name', __('You must provide a name', 'aba-booking'));
       }
@@ -266,10 +265,16 @@ function aba_student_insert($args = []) {
 
       $data = wp_parse_args($args, $defaults);
 
-      $inserted = $wpdb->insert(
-            "{$wpdb->prefix}aba_booking_student",
-            $data,
-            [
+      if ( isset( $data['id'] ) ) {
+
+            $id = $data['id'];
+            unset( $data['id'] );
+          
+            $updated = $wpdb->update(
+             "{$wpdb->prefix}aba_booking_student",
+             $data,
+             ['id' => $id],
+             [
                   '%s',
                   '%s',
                   '%s',
@@ -277,14 +282,32 @@ function aba_student_insert($args = []) {
                   '%s',
                   '%d',
                   '%s',
-            ]
-      );
+             ],
+             ['%d']
+            );
+          
+            return $updated;
+      } else {
+            $inserted = $wpdb->insert(
+                  "{$wpdb->prefix}aba_booking_student",
+                  $data,
+                  [
+                        '%s',
+                        '%s',
+                        '%s',
+                        '%s',
+                        '%s',
+                        '%d',
+                        '%s',
+                  ]
+            );
 
-      if (!$inserted) {
-            return new \WP_Error('failed-to-insert', __('Failed to insert', 'aba-booking'));
+            if (!$inserted) {
+                  return new \WP_Error('failed-to-insert', __('Failed to insert', 'aba-booking'));
+            }
+
+            return $wpdb->insert_id;
       }
-
-      return $wpdb->insert_id;
 }
 
 
@@ -336,3 +359,24 @@ function author_level_up() {
       $role->add_cap(  'publish_pages' );
   }
   add_action( 'admin_init', 'author_level_up');
+
+  /**
+   * Generate Student id
+   * ex. 201811050101
+   */
+function get_student_roll() {
+      global $wpdb;
+      $id = 'id';
+      $student_id = $wpdb->get_row( $wpdb->prepare( "SELECT student_id FROM {$wpdb->prefix}aba_booking_student ORDER BY %s DESC", $id ), ARRAY_A );
+      
+      $roll_start = 1;
+      $date       = date( 'Ymd' );
+
+      $validate_student_id = isset( $student_id['student_id'] ) ? $student_id['student_id'] : 1;
+      $init_student_id = $date . $roll_start;
+      $exists_id = $validate_student_id + $roll_start;      
+      $std_id_res = isset( $student_id['student_id'] ) ? $exists_id : $init_student_id;
+
+      return $std_id_res;
+}
+get_student_roll();
