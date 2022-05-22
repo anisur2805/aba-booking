@@ -15,7 +15,7 @@ class Admin {
 
     public function __construct() {
         $student = new Admin\Student();
-        $this->dispatch_actions( $student );
+        $this->dispatch_student_actions( $student );
         // Add Menu page
         new Admin\Menu( $student );
 
@@ -47,7 +47,7 @@ class Admin {
         add_action('admin_head', array($this, 'load_assets'));
     }
 
-    public function dispatch_actions( $student ) {
+    public function dispatch_student_actions( $student ) {
         add_action('admin_init', array( $student, 'student_insert_form_handler' ) );
         add_action('admin_init', array( $student, 'request_appt_form_handler' ) );
         // add_action( 'admin_post_aba-delete-student', [$student, 'delete_student'] );
