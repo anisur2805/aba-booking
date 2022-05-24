@@ -15,11 +15,26 @@ class Admin {
 
     public function __construct() {
         $student = new Admin\Student();
+
+        $student->delete_method( 
+            'aba-delete-student',
+            admin_url( "admin.php?page=aba-booking-student&student-deleted=true"),
+            admin_url( "admin.php?page=aba-booking-student&student-deleted=false" )
+        );
+
         $this->dispatch_student_actions( $student );
+        
+
         // Add Menu page
         new Admin\Menu( $student );
 
-        // Instantiate Data Table
+        $this->init_class();
+        
+        add_action('admin_head', array($this, 'load_assets'));
+    }
+
+    public function init_class() {
+         // Instantiate Data Table
         // new Data_Table();
         // new Student_Data_Table();
 
@@ -43,9 +58,8 @@ class Admin {
 
         // Instantiate Departments CPT
         new Semester();
-        
-        add_action('admin_head', array($this, 'load_assets'));
     }
+    
 
     public function dispatch_student_actions( $student ) {
         add_action('admin_init', array( $student, 'student_insert_form_handler' ) );
