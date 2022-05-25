@@ -32,6 +32,20 @@ require_once __DIR__ . "/vendor/autoload.php";
                   
                   register_activation_hook( __FILE__, array( $this, 'activate' ) );
             }
+
+            /**
+             * A dummy magic method to prevent aba-booking from being cloned
+             *
+             * @since 1.0.0 aba-booking
+             */
+            public function __clone() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'bbpress' ), '2.1' ); }
+
+            /**
+             * A dummy magic method to prevent aba-booking from being unserialized
+             *
+             * @since 1.0.0 aba-booking
+             */
+            public function __wakeup() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'bbpress' ), '2.1' ); }
             
             /**
              * Initialize a singleton instance
