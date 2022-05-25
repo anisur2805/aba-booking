@@ -7,14 +7,10 @@ use Aba_Booking\Traits\Delete_Item;
 
 class Student {
     use Form_Error;
-    use Delete_Item;
 
     public function render_student_page() {
         $action = isset($_GET['action']) ? $_GET['action'] : 'list';
         $id     = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-        // $student_req_appt  = aba_booking_req_appt( $id );
-        // var_dump( $student_req_appt );
 
         switch ($action) {
             case 'new':
@@ -26,14 +22,14 @@ class Student {
                 $template = __DIR__ . '/views/edit-student.php';
                 break;
 
-                case 'req-appt':
-                    $student_req_appt  = aba_booking_req_appt( $id );
-                    $template = __DIR__ . '/views/student-req-appt.php';
-                    break;
-                    
-                default:
-                    $template = __DIR__ . '/views/list-student.php';
-                    break;
+            case 'req-appt':
+                $student_req_appt  = aba_booking_req_appt( $id );
+                $template = __DIR__ . '/views/student-req-appt.php';
+                break;
+                
+            default:
+                $template = __DIR__ . '/views/list-student.php';
+                break;
         }
 
         if (file_exists($template)) {
@@ -188,27 +184,5 @@ class Student {
         exit();
 
     }
-
-    // public function delete_student() {
-    //     if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'aba-delete-student' ) ) {
-    //         wp_die( 'Are you cheating mia!' );
-    //     }
-
-    //     if ( !current_user_can( 'manage_options' ) ) {
-    //         wp_die( 'Are you cheating!' );
-    //     }
-
-    //     $id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ) : 0;
-
-    //     if ( aba_booking_delete_student( $id ) ) {
-    //         $redirected_to = admin_url( "admin.php?page=aba-booking-student&student-deleted=true" );
-    //     } else {
-    //         $redirected_to = admin_url( "admin.php?page=aba-booking-student&student-deleted=false" );
-    //     }
-
-    //     wp_redirect( $redirected_to );
-    //     exit;
-
-    // }
 
 }
