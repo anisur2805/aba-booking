@@ -138,11 +138,21 @@ function aba_booking_get_students($id) {
  *
  * @return int|boolean
  */
-function aba_booking_delete_student( $id ) {
-      global $wpdb;
+// function aba_booking_delete_student( $id ) {
+//       global $wpdb;
+
+//       return $wpdb->delete(
+//             $wpdb->prefix . 'aba_booking_student',
+//             ['id' => $id],
+//             ['%d'],
+//       );
+// }
+
+function aba_booking_delete_row( $id, $table_name ) {
+    global $wpdb;
 
       return $wpdb->delete(
-            $wpdb->prefix . 'aba_booking_student',
+            $wpdb->prefix . $table_name,
             ['id' => $id],
             ['%d'],
       );
