@@ -7,10 +7,14 @@ use Aba_Booking\Traits\Delete_Item;
 
 class Student {
     use Form_Error;
+    use Delete_Item;
 
     public function render_student_page() {
         $action = isset($_GET['action']) ? $_GET['action'] : 'list';
         $id     = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+        // $student_req_appt  = aba_booking_req_appt( $id );
+        // var_dump( $student_req_appt );
 
         switch ($action) {
             case 'new':
@@ -22,14 +26,14 @@ class Student {
                 $template = __DIR__ . '/views/edit-student.php';
                 break;
 
-            case 'req-appt':
-                $student_req_appt  = aba_booking_req_appt( $id );
-                $template = __DIR__ . '/views/student-req-appt.php';
-                break;
-                
-            default:
-                $template = __DIR__ . '/views/list-student.php';
-                break;
+                case 'req-appt':
+                    $student_req_appt  = aba_booking_req_appt( $id );
+                    $template = __DIR__ . '/views/student-req-appt.php';
+                    break;
+                    
+                default:
+                    $template = __DIR__ . '/views/list-student.php';
+                    break;
         }
 
         if (file_exists($template)) {

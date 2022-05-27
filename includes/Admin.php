@@ -17,8 +17,10 @@ class Admin {
         $student = new Admin\Student();
         $this->dispatch_student_actions( $student );
         new Admin\Menu( $student );
+        $this->dispatch_student_actions( $student );
 
         $this->init_class();
+        
         add_action('admin_head', array($this, 'load_assets'));
     }
 
