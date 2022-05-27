@@ -15,21 +15,10 @@ class Admin {
 
     public function __construct() {
         $student = new Admin\Student();
-
-        $student->delete_method( 
-            'aba-delete-student',
-            admin_url( "admin.php?page=aba-booking-student&student-deleted=true"),
-            admin_url( "admin.php?page=aba-booking-student&student-deleted=false" )
-        );
-
         $this->dispatch_student_actions( $student );
-        
-
-        // Add Menu page
         new Admin\Menu( $student );
 
         $this->init_class();
-        
         add_action('admin_head', array($this, 'load_assets'));
     }
 
